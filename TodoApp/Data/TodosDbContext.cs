@@ -6,7 +6,7 @@ namespace TodoApp.Data
 {
     public class TodosDbContext : DbContext
     {
-        protected TodosDbContext(DbContextOptions<TodosDbContext> options)
+        public TodosDbContext(DbContextOptions<TodosDbContext> options)
         : base(options)
         {
 

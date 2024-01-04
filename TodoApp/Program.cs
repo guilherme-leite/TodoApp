@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Data;
+using TodoApp.Repository;
 using TodoApp.Repository.Interfaces;
 
 namespace TodoApp
@@ -22,7 +23,7 @@ namespace TodoApp
                     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
                 );
 
-            builder.Services.AddScoped<IUserRepository, IUserRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             var app = builder.Build();
 
