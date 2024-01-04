@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using TodoApp.Data;
+using TodoApp.Repository.Interfaces;
+
 namespace TodoApp
 {
     public class Program
@@ -12,6 +16,13 @@ namespace TodoApp
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddEntityFrameworkSqlServer().
+                AddDbContext<TodosDbContext>(
+                    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"))
+                );
+
+            builder.Services.AddScoped<IUserRepository, IUserRepository>();
 
             var app = builder.Build();
 
