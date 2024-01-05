@@ -38,5 +38,17 @@ namespace TodoApp.Controllers
             
             return Ok(newUser);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult<User>> Update([FromBody] User user, int id)
+        {
+            user.Id = id;
+
+            User UpdatedUser = await _userRepository.Update(user, id);
+
+            return Ok(user);
+        }
+
     }
 }
