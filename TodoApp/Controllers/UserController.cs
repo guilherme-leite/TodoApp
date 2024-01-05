@@ -50,5 +50,14 @@ namespace TodoApp.Controllers
             return Ok(user);
         }
 
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult<User>> Delete(int id)
+        {
+            bool deleted = await _userRepository.Delete(id);
+
+            return Ok();
+        }
+
     }
 }
