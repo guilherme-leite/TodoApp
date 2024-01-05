@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Models;
+using TodoApp.Repository.Interfaces;
 
 namespace TodoApp.Controllers
 {
@@ -8,10 +9,34 @@ namespace TodoApp.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<List<User>> GetAllUsers()
+        private readonly IUserRepository _userRepository;
+
+        public UserController(IUserRepository userRepository)
         {
-            return Ok();
+            _userRepository = userRepository;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> GetAllUsers()
+        {
+            List<User> users = await _userRepository.FindAll();
+            return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<User>> GetUser([FromRoute] int id)
+        {
+            User user = await _userRepository.FindById(id);
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
+        {
+            User newUser = await _userRepository.Add(user);
+            
+            return Ok(newUser);
         }
     }
 }
